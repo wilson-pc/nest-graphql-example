@@ -1,0 +1,237 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Country {
+  id: ID!
+  name: String
+  Continent: String
+}
+
+type Cat {
+  id: ID!
+  name: String
+  lastName: String
+  password: Password
+  country: Country
+}
+
+"""Texto hasheado con bcrypt"""
+scalar Password
+
+type Query {
+  roles: [Role!]!
+  role(where: RoleWhereUniqueInput!): Role!
+  user(where: UserWhereUniqueInput!): User!
+  users(where: UserWhereInput, orderBy: [UserOrderByInput!], take: Int, skip: Int, distinct: [UserDistinctFieldEnum!]): [User!]!
+  multi(value: Base!): String!
+  catOne: Cat!
+}
+
+type Role {
+  id: String!
+  name: String
+}
+
+input RoleWhereUniqueInput {
+  id: String
+  name: String
+}
+
+type User {
+  id: String!
+  createdAt: DateTime!
+  email: String!
+  name: String!
+  role: Role
+  roleId: String
+  password: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input UserWhereUniqueInput {
+  id: String
+  email: String
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+  id: StringFilter
+  createdAt: DateTimeFilter
+  email: StringFilter
+  name: StringFilter
+  role: RoleWhereInput
+  roleId: StringNullableFilter
+}
+
+input StringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringFilter
+}
+
+input NestedStringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringFilter
+}
+
+input DateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: NestedDateTimeFilter
+}
+
+input NestedDateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: NestedDateTimeFilter
+}
+
+input RoleWhereInput {
+  AND: [RoleWhereInput!]
+  OR: [RoleWhereInput!]
+  NOT: [RoleWhereInput!]
+  id: StringFilter
+  name: StringFilter
+  users: UserListRelationFilter
+}
+
+input UserListRelationFilter {
+  every: UserWhereInput
+  some: UserWhereInput
+  none: UserWhereInput
+}
+
+input StringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
+}
+
+input NestedStringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
+}
+
+input UserOrderByInput {
+  createdAt: SortOrder
+  email: SortOrder
+  name: SortOrder
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+enum UserDistinctFieldEnum {
+  id
+  createdAt
+  email
+  name
+  password
+  roleId
+}
+
+"""Convert string to uud"""
+scalar Base
+
+type Mutation {
+  createRole(data: RoleCreateInput!): Role!
+  createUser(data: UserCreateInput!): User!
+  catCreate(data: CatDto!): Cat!
+}
+
+input RoleCreateInput {
+  id: String
+  name: String!
+  users: UserCreateManyWithoutRoleInput
+}
+
+input UserCreateManyWithoutRoleInput {
+  create: [UserCreateWithoutRoleInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateWithoutRoleInput {
+  id: String
+  createdAt: DateTime
+  email: String!
+  name: String!
+  password: Password!
+}
+
+input UserCreateInput {
+  id: String
+  createdAt: DateTime
+  email: String!
+  name: String!
+  role: RoleCreateOneWithoutUsersInput
+  password: Password!
+}
+
+input RoleCreateOneWithoutUsersInput {
+  create: RoleCreateWithoutUsersInput
+  connect: RoleWhereUniqueInput
+}
+
+input RoleCreateWithoutUsersInput {
+  id: String
+  name: String!
+}
+
+input CatDto {
+  name: String
+  lastName: String
+  password: Password
+}
